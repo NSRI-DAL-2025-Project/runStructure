@@ -107,7 +107,7 @@ gl.run.structure <- function(x,
         # check that Structure is installed
      #   structure <- file.exists(exec)
 
-        structure <- Sys.which("plink")
+        structure <- Sys.which("structure")
         exec <- structure
   
         if (!structure) {
