@@ -107,7 +107,7 @@ gl.run.structure <- function(x,
         # check that Structure is installed
      #   structure <- file.exists(exec)
 
-        structure <- Sys.which("structure")
+        structure <- Sys.which("structure") ############ FOR CHECKING ###################
         exec <- structure
   
         if (!structure) {
@@ -130,16 +130,50 @@ parameter to locate it."
                          verbose = verbose)
         
         # CHECK DATATYPE
-        datatype <- utils.check.datatype(x, verbose = verbose)
+   #     datatype <- utils.check.datatype(x, verbose = verbose)
         
-        if (datatype != "SNP") {
-            stop(error(
-                "You need to provide a SNP genlight object (ploidy=2)!"
-            ))
-        }
-        
+    #    if (datatype != "SNP") {
+     #       stop(error(
+      #          "You need to provide a SNP genlight object (ploidy=2)!"
+       #     ))
+        #}
+############################################
+
+   if (tools::file_ext(x) == "csv") {
+      file <- readr::read_csv(x)
+   } else if (tools::file_ext(x) == "xlsx") {
+      file <- readxl::read_excel(x)
+   } else if (tools::file_ext(x) == "vcf"){
+     file <- vcfR::read.vcfR(x)
+   } else {
+      stop("Input file should be in csv or xlsx format.")
+   }
+
+
+   file <- lapply(file, function(x) gsub("|", "/", x, fixed = TRUE))
+   file <- as.data.frame(file)
+   
+   file[is.na(file)] <- "N"
+   file <- file %>%
+      mutate(across(everything(), ~ case_when(
+         . == "N/A" ~ "N", 
+         . == "NA" ~ "N",
+         TRUE ~ .x))) %>%
+      rename(Ind = 1, Pop = 2)
+
+   ind <- as.character(file$Ind)
+   pop <- as.character(file$Pop)
+   fsnps_geno <- file[, 3:ncol(file)]
+   
+   fsnps_gen <- adegenet::df2genind(fsnps_geno, ind.names = ind, pop = pop, sep = "/", NA.char = "N", ploidy = 2, type = "codom")
+   fsnps_gen@pop <- as.factor(file$Pop)
+
+  gg <- darR::gi2gl(fsnps_gen, verbose = 0)
+  
+
+  ############################################
         # DO THE JOB
-        gg <- utils.structure.genind2gtypes(gl2gi(x, verbose = 0))
+      #  gg <- utils.structure.genind2gtypes(gl2gi(x, verbose = 0))
         
         sr <- utils.structure.run(gg, exec = exec, ...)
         
