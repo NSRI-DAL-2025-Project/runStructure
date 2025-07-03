@@ -99,6 +99,40 @@ gl.run.faststructure <- function(x,
   exec <- Sys.which("fastStructure-master")
   exec.plink <- Sys.which("plink")
   
+  ############################
+  
+  if (tools::file_ext(x) == "csv") {
+    file <- readr::read_csv(x)
+  } else if (tools::file_ext(x) == "xlsx") {
+    file <- readxl::read_excel(x)
+  } else {
+    stop("Input file should be in csv or xlsx format.")
+  }
+  
+  
+  file <- lapply(file, function(x) gsub("|", "/", x, fixed = TRUE))
+  file <- as.data.frame(file)
+  
+  file[is.na(file)] <- "N"
+  file <- file %>%
+    mutate(across(everything(), ~ case_when(
+      . == "N/A" ~ "N", 
+      . == "NA" ~ "N",
+      TRUE ~ .x))) %>%
+    rename(Ind = 1, Pop = 2)
+  
+  ind <- as.character(file$Ind)
+  pop <- as.character(file$Pop)
+  fsnps_geno <- file[, 3:ncol(file)]
+  
+  fsnps_gen <- adegenet::df2genind(fsnps_geno, ind.names = ind, pop = pop, sep = "/", NA.char = "N", ploidy = 2, type = "codom")
+  fsnps_gen@pop <- as.factor(file$Pop)
+  
+  x <- dartR::gi2gl(fsnps_gen, verbose = 0)
+
+  ###########################
+  
+  
   dartR.base::gl2plink(x,
     bed.files = TRUE,
     outpath = output,

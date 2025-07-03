@@ -143,8 +143,6 @@ parameter to locate it."
       file <- readr::read_csv(x)
    } else if (tools::file_ext(x) == "xlsx") {
       file <- readxl::read_excel(x)
-   } else if (tools::file_ext(x) == "vcf"){
-     file <- vcfR::read.vcfR(x)
    } else {
       stop("Input file should be in csv or xlsx format.")
    }
