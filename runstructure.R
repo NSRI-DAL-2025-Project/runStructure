@@ -168,8 +168,8 @@ parameter to locate it."
    fsnps_gen <- adegenet::df2genind(fsnps_geno, ind.names = ind, pop = pop, sep = "/", NA.char = "N", ploidy = 2, type = "codom")
    fsnps_gen@pop <- as.factor(file$Pop)
 
-  gg <- darR::gi2gl(fsnps_gen, verbose = 0)
-  
+ # gg <- dartR::gi2gl(fsnps_gen, verbose = 0)
+  gg <- fsnps_gen
 
   ############################################
         # DO THE JOB
