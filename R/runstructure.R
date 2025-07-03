@@ -110,16 +110,6 @@ gl.run.structure <- function(x,
         structure <- Sys.which("structure") ############ FOR CHECKING ###################
         exec <- structure
   
-        if (!structure) {
-            stop(error(
-                paste(
-"Cannot find Structure executable in the exex path provided:\n",
-                    exec,
-"\nCheck the help page of ?gl.run.structure on how to download and the exec
-parameter to locate it."
-                )
-            ))
-        }
         # SET VERBOSITY
         verbose <- gl.check.verbosity(verbose)
         
