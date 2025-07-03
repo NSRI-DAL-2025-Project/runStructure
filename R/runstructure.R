@@ -104,6 +104,7 @@ gl.run.structure <- function(x,
       ))
       return(-1)
     }
+
         # check that Structure is installed
      #   structure <- file.exists(exec)
 
@@ -111,11 +112,11 @@ gl.run.structure <- function(x,
         exec <- structure
   
         # SET VERBOSITY
-        verbose <- gl.check.verbosity(verbose)
+        verbose <- dartR.base::gl.check.verbosity(verbose)
         
         # FLAG SCRIPT START
         funname <- match.call()[[1]]
-        utils.flag.start(func = funname,
+        dartR.base::utils.flag.start(func = funname,
                          build = "Jody",
                          verbose = verbose)
         
@@ -163,9 +164,9 @@ gl.run.structure <- function(x,
         # DO THE JOB
       #  gg <- utils.structure.genind2gtypes(gl2gi(x, verbose = 0))
         
-        sr <- utils.structure.run(gg, exec = exec, ...)
+        sr <- dartR.base::utils.structure.run(gg, exec = exec, ...)
         
-        ev <- utils.structure.evanno(sr)
+        ev <- dartR.base::utils.structure.evanno(sr)
         
         pa <- ((ev$plots$mean.ln.k + ev$plots$mean.ln.k) / 
                  (ev$plots$ln.ppk + ev$plots$delta.k)) + plot_theme
