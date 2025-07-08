@@ -5,7 +5,10 @@ Version: 0.0.1.0
 Depends: R (>= 4.0.0)
 Imports:
     purrr,
-    gsubfn
+    gsubfn,
+    dartR,
+    dartRverse,
+    dartR.base
 Encoding: UTF-8
 Suggests: 
     testthat (>= 3.0.0)
