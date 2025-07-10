@@ -1,5 +1,3 @@
-#' @name gl.run.faststructure
-#'
 #' @title Runs a faststructure analysis using a genlight object
 #'
 #' @description
@@ -20,40 +18,7 @@
 #' @details
 #' Download faststructure binary for your system from here (only runs on Mac or
 #' Linux):
-#'
-#' https://github.com/StuntsPT/Structure_threader/tree/master/structure_threader/bins
-#'
-#' Move faststructure file to working directory. Make file executable using
-#' terminal app.
-#'
-#' \code{system(paste0("chmod u+x ",getwd(), "/faststructure"))}
-#'
-#' Download plink binary for your system from here:
-#'
-#' https://www.cog-genomics.org/plink/
-#'
-#' Move plink file to working directory. Make file executable using
-#' terminal app.
-#'
-#' \code{system(paste0("chmod u+x ",getwd(), "/plink"))}
-#'
-#' To install fastStructure dependencies follow these directions:
-#' https://github.com/rajanil/fastStructure
-#'
-#' fastStructure performs inference for the simplest, independent-loci,
-#' admixture model, with two choices of priors that can be specified using
-#' the --prior parameter. Thus, unlike Structure, fastStructure does not require
-#' the mainparams and extraparam files. The inference algorithm used by
-#'  fastStructure is fundamentally different from that of Structure and
-#'  requires the setting of far fewer options.
-#'
-#'  To identify the number of populations that best approximates the marginal
-#'  likelihood of the data, the marginal likelihood is extracted from each run
-#'  of K, averaged across replications and plotted.
-#'
-#' @return A list in which each list entry is a single faststructure run output
-#' (there are k.range * num.k.rep number of runs).
-#'
+
 #' @author Luis Mijangos (Post to \url{https://groups.google.com/d/forum/dartr})
 #'
 #' @examples
@@ -67,13 +32,6 @@
 #' )
 #' qmat <- gl.plot.faststructure(res, k.range = 2:3)
 #' gl.map.structure(qmat, K = 2, t1, scalex = 1, scaley = 0.5)
-#' }
-#' @export
-#' @references
-#' \itemize{
-#' \item Raj, A., Stephens, M., & Pritchard, J. K. (2014). fastSTRUCTURE:
-#' variational inference of population structure in large SNP data sets.
-#' Genetics, 197(2), 573-589.
 #' }
 #' @export
 gl.run.faststructure <- function(x,

@@ -1,5 +1,3 @@
-#' @name gl.run.structure
-#'
 #' @title Runs a STRUCTURE analysis using a genlight object
 #'
 #' @description
@@ -30,62 +28,7 @@
 #' @details The function is basically a convenient wrapper around the beautiful
 #' strataG function \code{structureRun} (Archer et al. 2016). For a detailed
 #' description please refer to this package (see references below).
-#' To make use of this function you need to download STRUCTURE for you system
-#' (\bold{non GUI version}) from here
-#' \href{https://web.stanford.edu/group/pritchardlab/structure_software/release_versions/v2.3.4/html/structure.html}{STRUCTURE}.
-#' 
-#' \bold{Format note}
-#' 
-#' For this function to work, make sure that individual and population names 
-#' have no spaces. To substitute spaces by underscores you could use the R 
-#' function \code{gsub} as below.
-#' 
-#' \code{popNames(gl) <- gsub(" ","_",popNames(gl))}
-#' 
-#' \code{indNames(gl) <- gsub(" ","_",indNames(gl)) }
-#' 
-#' It's also worth noting that Structure truncates individual names at 11 
-#' characters. The function will fail if the names of individuals are not unique
-#'  after truncation. To avoid this possible problem, a number sequence, as 
-#'  shown in the code below, might be used instead of individual names.
-#' \code{
-#' indNames(gl) <- as.character(1:length(indNames(gl)))
-#'}
-#' @return An sr object (structure.result list output). Each list entry is a
-#' single structurerun output (there are k.range * num.k.rep number of runs).
-#' For example the summary output of the first run can be accessed via
-#' \code{sr[[1]]$summary} or the q-matrix of the third run via
-#' \code{sr[[3]]$q.mat}. To conveniently summarise the outputs across runs
-#' (clumpp) you need to run gl.plot.structure on the returned sr object. For
-#' Evanno plots run gl.evanno on your sr object.
-#'
 #' @author Bernd Gruber (Post to \url{https://groups.google.com/d/forum/dartr})
-#'
-#' @examples
-#' \dontrun{
-#' #bc <- bandicoot.gl[,1:100]
-#' #sr <- gl.run.structure(bc, k.range = 2:5, num.k.rep = 3, 
-#' # exec = './structure.exe')
-#' #ev <- gl.evanno(sr)
-#' #ev
-#' #qmat <- gl.plot.structure(sr, K=3)
-#' #head(qmat)
-#' #gl.map.structure(qmat, bc, scalex=1, scaley=0.5)
-#' }
-#' @import patchwork
-### @importFrom strataG genind2gtypes structureRun
-#' @importFrom dplyr bind_rows mutate_at vars starts_with mutate group_by 
-#' ungroup arrange n rename select everything n_distinct bind_rows starts_with
-#' @export
-### @seealso \code{structureRun}
-#' @references
-#' \itemize{
-#' \item Pritchard, J.K., Stephens, M., Donnelly, P. (2000) Inference of
-#' population structure using multilocus genotype data. Genetics 155, 945-959.
-#' \item Archer, F. I., Adams, P. E. and Schneiders, B. B. (2016) strataG: An R
-#' package for manipulating, summarizing and analysing population genetic data.
-#'  Mol Ecol Resour. doi:10.1111/1755-0998.12559
-#' }
 #' @export
 gl.run.structure <- function(x,
                              ...,
